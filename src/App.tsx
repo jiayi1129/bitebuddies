@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import LoginButton from './components/LoginButton'
 import LogoutButton from './components/LogoutButton'
-import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation } from "../convex/_generated/react";
+import { useAuth0 } from '@auth0/auth0-react'
+import { useMutation, useQuery } from '../convex/_generated/react'
 import { Id } from '../convex/_generated/dataModel'
-import { Box, Container, Grid, Typography } from '@mui/material';
-import CategoryTabs from './components/home/CategoryTabs';
-import GoogleMap from './GoogleMap';
 import NavBar from './components/navBar';
+import GoogleMap from './GoogleMap';
+import CategoryTabs from './components/home/CategoryTabs';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import Logo from './assets/Logo.png';
 
 function App() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0()
 
-  const createGroup = useMutation("createGroup");
+  const createGroup = useMutation('createGroup')
 
-  const [userId, setUserId] = useState<Id<"users"> | null>(null);
-  const storeUser = useMutation("storeUser");
+  const [userId, setUserId] = useState<Id<'users'> | null>(null)
+  const storeUser = useMutation('storeUser')
   // Call the `storeUser` mutation function to store
   // the current user in the `users` table and return the `Id` value.
   useEffect(() => {
@@ -25,12 +25,22 @@ function App() {
     // Recall that `storeUser` gets the user information via the `auth`
     // object on the server. You don't need to pass anything manually here.
     async function createUser() {
-      const id = await storeUser();
-      setUserId(id);
+      const id = await storeUser()
+      setUserId(id)
     }
-    createUser();
-    return () => setUserId(null);
-  }, [storeUser]);
+    createUser()
+    return () => setUserId(null)
+  }, [storeUser])
+
+  const [restaurants, setRestaurants] = useState<Place[]>([])
+  const startTimestamp = BigInt(1676768868)
+  const endTimestamp = BigInt(1676768870)
+  const price = BigInt(2)
+  const groups =
+    useQuery('getAllGroups', startTimestamp, endTimestamp, price) || []
+  const restaurantLocationId = groups.map(({ restaurant }) => {
+    return restaurant.location
+  })
 
   return (
     <div className="App">
@@ -64,11 +74,20 @@ function App() {
       </Box>
       <Grid container>
         <Grid item md={8}>
-          <CategoryTabs userId={userId}></CategoryTabs>
+          <CategoryTabs
+            userId={userId}
+            restaurants={restaurants}
+            startTimestamp={startTimestamp}
+            endTimestamp={endTimestamp}
+            price={price}
+          ></CategoryTabs>
         </Grid>
         <Grid item xs={0} md={4}>
           <Container>
-            <GoogleMap></GoogleMap>
+            <GoogleMap
+              setData={setRestaurants}
+              locationIds={restaurantLocationId}
+            ></GoogleMap>
           </Container>
         </Grid>
       </Grid>

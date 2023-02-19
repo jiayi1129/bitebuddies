@@ -21,14 +21,13 @@ type Libraries = (
   | 'places'
   | 'visualization'
 )[]
-interface Place {
+export interface Place {
   location: string
   name: string
   price: number
   geometry: PlaceGeometry
   address: string
-  url: google.maps.places.PlaceResult['url']
-  photos: google.maps.places.PlacePhoto[]
+  url: string
 }
 
 const containerStyle = {
@@ -40,7 +39,13 @@ const defaultZoom = 13
 
 // https://react-google-maps-api-docs.netlify.app/#googlemap
 const LIBRARIES: Libraries = ['places']
-function SimpleMap() {
+function SimpleMap({
+  setData,
+  locationIds,
+}: {
+  setData: React.Dispatch<React.SetStateAction<Place[]>>
+  locationIds: string[]
+}) {
   const { isLoaded } = useJsApiLoader({
     id: 'fc87e1217f0a713a',
     googleMapsApiKey: 'AIzaSyBnvvZZxhuClo9EIU398Squ3pzD5vI3lDQ',
@@ -68,10 +73,7 @@ function SimpleMap() {
 
   // Marker Stuff
   // TODO: Query DB for placeIds
-  const [placeIds, setPlaceIds] = useState([
-    'ChIJ4XGi8Wyjj4ARiD83x1GRHys',
-    'ChIJR1988Qm7j4ARi_KmggVETuc',
-  ])
+  const [placeIds, setPlaceIds] = useState(locationIds)
 
   const fetchRestaurants = async (currentMap: Map) => {
     if (!currentMap) {
@@ -86,8 +88,11 @@ function SimpleMap() {
           price: restaurant.price_level || 0,
           geometry: restaurant.geometry!!,
           address: restaurant.vicinity || '',
-          url: restaurant.url || '',
-          photos: restaurant.photos || [],
+          url: restaurant.photos
+            ? restaurant.photos.length
+              ? restaurant.photos[0].getUrl()
+              : ''
+            : '',
         }
       })
     )
@@ -112,8 +117,11 @@ function SimpleMap() {
         price: restaurant.price_level || 0,
         geometry: restaurant.geometry!!,
         address: restaurant.vicinity || '',
-        url: restaurant.url || '',
-        photos: restaurant.photos || [],
+        url: restaurant.photos
+          ? restaurant.photos.length
+            ? restaurant.photos[0].getUrl()
+            : ''
+          : '',
       }
     })
     const existingRestaurants = (await fetchRestaurants(initialMap)) || []
@@ -127,6 +135,7 @@ function SimpleMap() {
       const allRestaurants = (await getAllRestaurants(initialMap)) || []
       console.log({ ...allRestaurants })
       setPlaces(allRestaurants)
+      setData(allRestaurants)
     }
   }
   // TODO: P2: Set search radius
@@ -158,6 +167,7 @@ function SimpleMap() {
     console.log('DragEnd:', { ...allRestaurants })
 
     setPlaces(allRestaurants)
+    setData(allRestaurants)
   }, 1000)
 
   // Search Box Stuff
@@ -179,8 +189,11 @@ function SimpleMap() {
       price: restaurant.price_level || 0,
       geometry: restaurant.geometry!!,
       address: restaurant.vicinity || '',
-      url: restaurant.url || '',
-      photos: restaurant.photos || [],
+      url: restaurant.photos
+        ? restaurant.photos.length
+          ? restaurant.photos[0].getUrl()
+          : ''
+        : '',
     })
 
     // Clear input value

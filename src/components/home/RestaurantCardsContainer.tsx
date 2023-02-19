@@ -1,13 +1,31 @@
-import { Grid } from "@mui/material";
-import { useQuery } from "../../../convex/_generated/react"
-import GroupCard from "./GroupCard";
+import { Grid } from '@mui/material'
+import { Id } from '../../../convex/_generated/dataModel'
+import { Place } from '../../GoogleMap'
+import RestaurantCard from './RestaurantCard'
 
-export default function RestaurantCardsContainer({ startTimestamp, endTimestamp, price, userId }: {startTimestamp: bigint, endTimestamp: bigint, price: bigint, userId: Id<"users"> | null}) {
-  const groups = useQuery("getAllGroups", startTimestamp, endTimestamp, price) || [];
-
+export default function RestaurantCardsContainer({
+  startTimestamp,
+  endTimestamp,
+  price,
+  userId,
+  restaurants,
+}: {
+  startTimestamp: bigint
+  endTimestamp: bigint
+  price: bigint
+  userId: Id<'users'> | null
+  restaurants: Place[]
+}) {
   return (
     <Grid container spacing={1}>
-      {groups.map(g => <Grid item xs={12} sm={6} md={4}><GroupCard group={g} userId={userId}></GroupCard></Grid>)}
+      {restaurants.map((restaurant) => (
+        <Grid item xs={12} sm={6} md={4}>
+          <RestaurantCard
+            restaurant={restaurant}
+            userId={userId}
+          ></RestaurantCard>
+        </Grid>
+      ))}
     </Grid>
   )
 }

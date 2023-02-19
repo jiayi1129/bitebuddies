@@ -7,6 +7,7 @@ import { useMutation } from "../convex/_generated/react";
 import { Id } from '../convex/_generated/dataModel'
 import { Box, Container, Grid } from '@mui/material';
 import CategoryTabs from './components/home/CategoryTabs';
+import GoogleMap from './GoogleMap';
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -50,7 +51,7 @@ function App() {
         </Grid>
         <Grid item xs={0} md={4}>
           <Container>
-            Insert Google Maps here...
+            <GoogleMap></GoogleMap>
           </Container>
         </Grid>
       </Grid>

@@ -5,11 +5,11 @@ import LogoutButton from './components/LogoutButton'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useMutation, useQuery } from '../convex/_generated/react'
 import { Id } from '../convex/_generated/dataModel'
-import NavBar from './components/navBar';
-import GoogleMap from './GoogleMap';
-import CategoryTabs from './components/home/CategoryTabs';
-import { Box, Container, Grid, Typography } from '@mui/material';
-import Logo from './assets/Logo.png';
+import NavBar from './components/navBar'
+import GoogleMap, { Place } from './GoogleMap'
+import CategoryTabs from './components/home/CategoryTabs'
+import { Box, Container, Grid, Typography } from '@mui/material'
+import Logo from './assets/Logo.png'
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0()
@@ -47,7 +47,7 @@ function App() {
       <Box sx={{ pb: 3 }}>
         <Grid container direction="row" justifyContent="space-between">
           <Grid item xs={6} md={4} container direction="row">
-            <img src={Logo} alt='logo' width={60} height={60} />
+            <img src={Logo} alt="logo" width={60} height={60} />
             <Typography
               variant="h6"
               sx={{
@@ -64,11 +64,11 @@ function App() {
           </Grid>
 
           <Grid item xs={12} md={4} direction="row" justifyContent="end">
-            {
-              isAuthenticated
-              ? <LogoutButton></LogoutButton>
-              : <LoginButton></LoginButton>
-            }
+            {isAuthenticated ? (
+              <LogoutButton></LogoutButton>
+            ) : (
+              <LoginButton></LoginButton>
+            )}
           </Grid>
         </Grid>
       </Box>

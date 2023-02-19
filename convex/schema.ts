@@ -5,14 +5,16 @@ export default defineSchema({
     name: s.string(),
     tokenIdentifier: s.string(),
   }).index("by_token", ["tokenIdentifier"]),
-  restaurants: defineTable({
-    name: s.string(),
-    location: s.string(),
-    price: s.bigint(),
-  }),
   groups: defineTable({
-    restaurant: s.id("restaurants"),
-    user: s.id("users"),
+    restaurant: s.object({
+      name: s.string(),
+      location: s.string(),
+      price: s.bigint(),
+      image: s.string(),
+      address: s.string(),
+    }),
+    users: s.array(s.id("users")),
+    capacity: s.bigint(),
     timestamp: s.bigint(),
   }),
   group_chats: defineTable({

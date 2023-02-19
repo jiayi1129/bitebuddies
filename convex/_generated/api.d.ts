@@ -10,6 +10,9 @@
  */
 
 import type { ApiFromModules } from "convex/api";
+import type * as createGroup from "../createGroup";
+import type * as getAllGroups from "../getAllGroups";
+import type * as joinGroup from "../joinGroup";
 import type * as storeUser from "../storeUser";
 
 /**
@@ -22,5 +25,8 @@ import type * as storeUser from "../storeUser";
  * `ConvexReactClient` to create app-specific types.
  */
 export type API = ApiFromModules<{
+  createGroup: typeof createGroup;
+  getAllGroups: typeof getAllGroups;
+  joinGroup: typeof joinGroup;
   storeUser: typeof storeUser;
 }>;

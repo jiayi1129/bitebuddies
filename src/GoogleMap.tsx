@@ -37,8 +37,10 @@ const containerStyle = {
 
 const defaultZoom = 13
 
-// https://react-google-maps-api-docs.netlify.app/#googlemap
+const GOOGLE_MAPS_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 const LIBRARIES: Libraries = ['places']
+
 function SimpleMap({
   setData,
   locationIds,
@@ -46,9 +48,10 @@ function SimpleMap({
   setData: React.Dispatch<React.SetStateAction<Place[]>>
   locationIds: string[]
 }) {
+  console.log({ GOOGLE_MAPS_API_KEY, GOOGLE_MAPS_MAP_ID, LIBRARIES })
   const { isLoaded } = useJsApiLoader({
-    id: 'fc87e1217f0a713a',
-    googleMapsApiKey: 'AIzaSyBnvvZZxhuClo9EIU398Squ3pzD5vI3lDQ',
+    id: GOOGLE_MAPS_MAP_ID,
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries: LIBRARIES,
   })
 

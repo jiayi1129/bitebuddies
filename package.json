@@ -13,13 +13,17 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.12.1",
+    "@date-io/dayjs": "^2.16.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.9",
     "@react-google-maps/api": "^2.18.1",
-    "convex": "^0.9.1",
     "google-map-react": "^2.2.0",
     "lodash": "^4.17.21",
+    "@mui/x-date-pickers": "^5.0.19",
+    "convex": "^0.9.1",
+    "dayjs": "^1.11.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

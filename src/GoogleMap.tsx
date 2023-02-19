@@ -32,7 +32,7 @@ interface Place {
 }
 
 const containerStyle = {
-  width: '100vw',
+  width: '100%',
   height: '100vh',
 }
 
@@ -232,38 +232,6 @@ function SimpleMap() {
           }}
         ></MarkerF>
       )}
-      <Autocomplete
-        onLoad={onLoadSearchBox}
-        onPlaceChanged={onPlaceChanged}
-        options={{
-          types: ['restaurant'],
-          // bounds: defaultBounds,
-          strictBounds: false,
-          componentRestrictions: { country: 'us' },
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Customized your placeholder"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          style={{
-            boxSizing: `border-box`,
-            border: `1px solid transparent`,
-            width: `240px`,
-            height: `32px`,
-            padding: `0 12px`,
-            borderRadius: `3px`,
-            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-            fontSize: `14px`,
-            outline: `none`,
-            textOverflow: `ellipses`,
-            position: 'absolute',
-            left: '50%',
-            marginLeft: '-120px',
-          }}
-        />
-      </Autocomplete>
     </GoogleMap>
   ) : (
     // TODO: Add a nice loader here

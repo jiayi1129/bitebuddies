@@ -5,10 +5,11 @@ import LogoutButton from './components/LogoutButton'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "../convex/_generated/react";
 import { Id } from '../convex/_generated/dataModel'
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import CategoryTabs from './components/home/CategoryTabs';
 import GoogleMap from './GoogleMap';
 import NavBar from './components/navBar';
+import Logo from './assets/Logo.png';
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -33,18 +34,32 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar></NavBar>
-      <Box sx={{ mb: 3 }}>
-        <Grid container direction="row">
+      <Box sx={{ pb: 3 }}>
+        <Grid container direction="row" justifyContent="space-between">
+          <Grid item xs={6} md={4} container direction="row">
+            <img src={Logo} alt='logo' width={60} height={60} />
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: 'nunito-sans',
+                fontSize: 24,
+                fontWeight: 700,
+                color: '#ad89f7',
+                verticalAlign: 'center',
+                lineHeight: '50px',
+              }}
+            >
+              ChewCrew
+            </Typography>
+          </Grid>
 
-        <h1>Chew Crew</h1>&nbsp;
-        <button onClick={() => createGroup()}>Create Group</button>&nbsp;
-        {
-          isAuthenticated 
-          ? <LogoutButton></LogoutButton>
-          : <LoginButton></LoginButton>
-        }
-        <h3>{user?.nickname}</h3>
+          <Grid item xs={12} md={4} direction="row" justifyContent="end">
+            {
+              isAuthenticated
+              ? <LogoutButton></LogoutButton>
+              : <LoginButton></LoginButton>
+            }
+          </Grid>
         </Grid>
       </Box>
       <Grid container>

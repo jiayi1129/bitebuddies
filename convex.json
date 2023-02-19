@@ -3,5 +3,10 @@
   "team": "clement0010",
   "prodUrl": "https://calculating-kangaroo-557.convex.cloud",
   "functions": "convex/",
-  "authInfo": []
+  "authInfo": [
+    {
+      "domain": "https://dev-qeg1fjk77yyecy14.us.auth0.com/",
+      "applicationID": "MnCG26UrDpc0j1DjZwl2ij2plewKsXfY"
+    }
+  ]
 }

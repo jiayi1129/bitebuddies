@@ -35,7 +35,7 @@ function App() {
   const [restaurants, setRestaurants] = useState<Place[]>([])
   const startTimestamp = BigInt(1676768868)
   const endTimestamp = BigInt(1676768870)
-  const price = BigInt(2)
+  const price = BigInt(6)
   const groups =
     useQuery('getAllGroups', startTimestamp, endTimestamp, price) || []
   const restaurantLocationId = groups.map(({ restaurant }) => {

@@ -21,11 +21,12 @@ export default mutation(
   async (
     { db },
     restaurant: Place = defaultRestaurant,
-    userId: Id<'users'>
+    userId: Id<'users'>,
+    timestamp: number,
   ) => {
     return db.insert('groups', {
       users: [userId],
-      timestamp: BigInt(1676768869),
+      timestamp: BigInt(timestamp),
       capacity: BigInt(5),
       restaurant: {
         ...restaurant,

@@ -84,7 +84,7 @@ export default function CategoryTabs({
         <RestaurantCardsContainer
           startTimestamp={BigInt(1676768868)}
           endTimestamp={BigInt(1676768870)}
-          price={BigInt(2)}
+          price={BigInt(6)}
           userId={userId}
           restaurants={restaurants}
         ></RestaurantCardsContainer>

@@ -8,6 +8,10 @@ import Typography from '@mui/material/Typography'
 import { Id } from '../../../convex/_generated/dataModel'
 import { useMutation } from '../../../convex/_generated/react'
 import { Place } from '../../GoogleMap'
+import { Box, Modal, TextField } from '@mui/material'
+import dayjs, { Dayjs } from 'dayjs'
+import { LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 export default function restaurantCard({
   restaurant,
@@ -16,7 +20,27 @@ export default function restaurantCard({
   restaurant: Place
   userId: Id<'users'> | null
 }) {
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
   const createGroup = useMutation('createGroup')
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [date, setDate] = React.useState<Dayjs>(
+    dayjs('2023-02-19T00:00:00.000Z'),
+  );
 
   async function createAndJoinGroup() {
     if (!userId) {
@@ -30,8 +54,10 @@ export default function restaurantCard({
         location: restaurant.location,
         address: restaurant.address,
       },
-      userId
+      userId,
+      date.unix(),
     )
+    handleClose();
   }
 
   // function isUserInGroup() {
@@ -66,7 +92,32 @@ export default function restaurantCard({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={createAndJoinGroup}>Create Party</Button>
+        <Button onClick={handleOpen}>Create Party</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <MobileDateTimePicker
+                    label="When do you want to eat?"
+                    value={date}
+                    onChange={(newValue) => {
+                      if (!newValue) {
+                        return;
+                      }
+                      setDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Typography>
+              <Button onClick={createAndJoinGroup}>Confirm</Button>
+            </Box>
+          </Modal>
       </CardActions>
     </Card>
   )

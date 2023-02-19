@@ -25,14 +25,13 @@ export default function GroupCard({
   }
 
   function isUserInGroup() {
-    console.log(group, userId)
     if (!userId) {
       return false
     }
     return group.users.map((user) => user.id).includes(userId.id)
   }
 
-  const dateTime = new Date(Number(group.timestamp))
+  const dateTime = new Date(Number(group.timestamp) * 1000)
   const formattedDate = `${dateTime.toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',

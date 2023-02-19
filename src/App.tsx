@@ -8,6 +8,7 @@ import { Id } from '../convex/_generated/dataModel'
 import { Box, Container, Grid } from '@mui/material';
 import CategoryTabs from './components/home/CategoryTabs';
 import GoogleMap from './GoogleMap';
+import NavBar from './components/navBar';
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavBar></NavBar>
       <Box sx={{ mb: 3 }}>
         <Grid container direction="row">
 
